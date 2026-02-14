@@ -6,6 +6,9 @@
   <title>K + A — Kohin + Aarsi</title>
   <link rel="stylesheet" href="styles.css" />
   <meta name="description" content="K + A — Kohin + Aarsi. A small love site. Access code required." />
+
+  <!-- Chessboard.js styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/css/chessboard.min.css"/>
 </head>
 <body>
   <!-- LOCK SCREEN -->
@@ -27,14 +30,15 @@
       <div class="brand">
         <a href="#" class="logo">K + A</a>
       </div>
-<nav class="nav" role="navigation" aria-label="main navigation">
-  <a href="#about">About</a>
-  <a href="#words">Some words</a>
-  <a href="#chess">Chess</a>
-  <a href="#contact">Contact</a>
-</nav>
+      <nav class="nav" role="navigation" aria-label="main navigation">
+        <a href="#about">About</a>
+        <a href="#words">Some words</a>
+        <a href="#chess">Chess</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
   </header>
+
   <main>
     <section class="hero">
       <div class="wrap">
@@ -60,11 +64,36 @@
       </div>
     </section>
     
-<section id="chess" class="wrap section alt">
-  <h3>Chess</h3>
-  <p>Play against a hard bot</p>
-  <div id="board" style="width:320px; margin:2rem auto;"></div>
-</section>
+    <!-- CHESS SECTION -->
+    <section id="chess" class="wrap section alt">
+      <h3>Chess</h3>
+      <p>Play against a hard bot</p>
+      <div id="board" style="width: 320px; margin: 2rem auto;"></div>
+
+      <!-- Chess scripts -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var game = new Chess();  // chess rules
+
+          var board = Chessboard('board', {
+            draggable: true,      // pieces can move
+            position: 'start',    // start position
+            onDrop: function(source, target) {
+              // check if move is legal
+              var move = game.move({
+                from: source,
+                to: target,
+                promotion: 'q'   // pawn becomes queen
+              });
+
+              if (move === null) return 'snapback'; // illegal move
+            }
+          });
+        });
+      </script>
+    </section>
 
     <section id="contact" class="wrap section">
       <h3>Contact us</h3>
@@ -81,24 +110,5 @@
   </footer>
 
   <script src="script.js"></script>
-  <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/css/chessboard.min.css"/>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  var game = new Chess();
-
-  Chessboard('board', {
-    draggable: true,
-    position: 'start'
-  });
-
-});
-</script>
-
 </body>
 </html>
