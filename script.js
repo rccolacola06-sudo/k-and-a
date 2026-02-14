@@ -1,7 +1,7 @@
 // ACCESS CODE: "mayas"
 (function(){
   const correct = "mayas";
-  const overlay = document.getElementById('lock-overlay');
+  const overlay = document.getElementById("lock-overlay").style.display = "none";
   const input = document.getElementById('code-input');
   const btn = document.getElementById('unlock-btn');
   const msg = document.getElementById('lock-msg');
