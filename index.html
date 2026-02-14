@@ -63,36 +63,12 @@
         <p class="closing">Yours,<br>Aarsi</p>
       </div>
     </section>
-    
+
     <!-- CHESS SECTION -->
     <section id="chess" class="wrap section alt">
       <h3>Chess</h3>
       <p>Play against a hard bot</p>
       <div id="board" style="width: 320px; margin: 2rem auto;"></div>
-
-      <!-- Chess scripts -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          var game = new Chess();  // chess rules
-
-          var board = Chessboard('board', {
-            draggable: true,      // pieces can move
-            position: 'start',    // start position
-            onDrop: function(source, target) {
-              // check if move is legal
-              var move = game.move({
-                from: source,
-                to: target,
-                promotion: 'q'   // pawn becomes queen
-              });
-
-              if (move === null) return 'snapback'; // illegal move
-            }
-          });
-        });
-      </script>
     </section>
 
     <section id="contact" class="wrap section">
@@ -109,6 +85,47 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- Chess scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
+
+  <!-- Your lock screen & chess logic -->
+  <script>
+    // ===== ACCESS CODE LOCK =====
+    const unlockBtn = document.getElementById('unlock-btn');
+    const codeInput = document.getElementById('code-input');
+    const overlay = document.getElementById('lock-overlay');
+    const lockMsg = document.getElementById('lock-msg');
+
+    unlockBtn.addEventListener('click', () => {
+      if(codeInput.value.toLowerCase() === 'mayas'){
+        overlay.style.display = 'none';
+      } else {
+        lockMsg.textContent = 'Wrong code, try again';
+      }
+    });
+
+    // ===== CHESSBOARD =====
+    document.addEventListener("DOMContentLoaded", function () {
+      var game = new Chess();
+
+      var board = Chessboard('board', {
+        draggable: true,
+        position: 'start',
+        onDrop: function(source, target) {
+          var move = game.move({
+            from: source,
+            to: target,
+            promotion: 'q'
+          });
+          if (move === null) return 'snapback';
+        }
+      });
+    });
+
+    // ===== UPDATE YEAR =====
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
 </body>
 </html>
