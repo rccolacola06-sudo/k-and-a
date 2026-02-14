@@ -67,7 +67,7 @@
     <!-- CHESS SECTION -->
     <section id="chess" class="wrap section alt">
       <h3>Chess</h3>
-      <p>Play against a hard bot</p>
+      <p>Play against a bot</p>
       <div id="board" style="width: 320px; margin: 2rem auto;"></div>
     </section>
 
@@ -89,7 +89,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
 
-  <!-- Your lock screen & chess logic -->
+  <!-- Lock screen + chess bot + year -->
   <script>
     // ===== ACCESS CODE LOCK =====
     const unlockBtn = document.getElementById('unlock-btn');
@@ -105,20 +105,24 @@
       }
     });
 
-    // ===== CHESSBOARD =====
+    // ===== CHESSBOARD + SIMPLE BOT =====
     document.addEventListener("DOMContentLoaded", function () {
       var game = new Chess();
-
       var board = Chessboard('board', {
         draggable: true,
         position: 'start',
         onDrop: function(source, target) {
-          var move = game.move({
-            from: source,
-            to: target,
-            promotion: 'q'
-          });
-          if (move === null) return 'snapback';
+          var move = game.move({from: source, to: target, promotion: 'q'});
+          if(move === null) return 'snapback';
+
+          // Simple bot: random legal move after 0.3s
+          window.setTimeout(function() {
+            var moves = game.moves();
+            if(moves.length === 0) return; // game over
+            var botMove = moves[Math.floor(Math.random() * moves.length)];
+            game.move(botMove);
+            board.position(game.fen());
+          }, 300);
         }
       });
     });
@@ -126,6 +130,5 @@
     // ===== UPDATE YEAR =====
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
-
 </body>
 </html>
