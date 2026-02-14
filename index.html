@@ -75,5 +75,47 @@
   </footer>
 
   <script src="script.js"></script>
+  <h2>Chess</h2>
+<p>Play against a hard bot</p>
+<div id="board" style="width:300px; margin:auto;"></div>
+<button id="restart">Restart</button>
+<p id="status"></p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/css/chessboard.min.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.0.0/chess.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stockfish.js/stockfish.js"></script>
+
+<script>
+const game = new Chess();
+const engine = STOCKFISH();
+engine.postMessage("uci");
+engine.postMessage("setoption name Skill Level value 20");
+
+const board = Chessboard("board", {
+  draggable: true,
+  position: "start",
+
+  onDrop: (from, to) => {
+    const move = game.move({ from, to, promotion: "q" });
+    if (!move) return "snapback";
+
+    engine.postMessage("position fen " + game.fen());
+    engine.postMessage("go depth 18");
+
+    engine.onmessage = e => {
+      if (e.startsWith("bestmove")) {
+        game.move(e.split(" ")[1]);
+        board.position(game.fen());
+      }
+    };
+  }
+});
+
+document.getElementById("restart").onclick = () => {
+  game.reset();
+  board.start();
+};
+</script>
 </body>
 </html>
