@@ -58,7 +58,7 @@
       <div class="letter">
         <p>Today, half a year, or 184 days ago I climbed a mountain around Millerton mountain, in Fresno, California. It was the hardest hike of my life. I had just been cured of bronchitis a week before, but I was already huffing and puffing uncontrobally at the base of the mountain. I felt nauseous and hadn’t eaten anything either. I was so embarassed looking around at all the pro hikers around me. But you, you never made me feel embarassed about my weak hiking skills. Instead, you fed me water, kept my bag with you, and held onto me the whole way. Since then, you have never stopped holding on to me through every mountain that appears in my life. Instead, you continue taking care of me. For that, I am forever thankful.</p>
         <p>Thank you for making me smile even on the days you barely feel like smiling. Please know it doesn’t go unnoticed. Thank you for taking time out of your day to talk to me, even though you have so many other things to do. Thank you for listening to me always, and remembering what I say. Thank you for staying with me, even when I make it hard. Thank you for caring for Aarnav. Thank you for saying you love me and showing me everyday. Thank you for thinking of me always. Thank you for being so kind to me. Thank you for staying on earth, even when life doesn’t go easy on you. I would never want to lose you.</p>
-        <p>Thank you for being more vulnerable with me, even when you’re scared to. Thank you for talking to me even when you don’t want to. Thank you for letting me see you, and love you. Thank you for holding my things. Thank you for kissing me on call. Thank you for making me laugh. Thank you for not hurting me. Thank you for getting me flowers. Thank you for knowing my favourite chocolates. Thank you for all that you do. Thank you for the best 6 months ever. I love you so much. You truly mean the world to me and I want to give you every bit of it. You are all that I have ever dreamed of having and every fiber of my being is so irrevacably in love with you.</p>
+        <p>Thank you for being more vulnerable with me, even when you’re scared to. Thank you for talking to me even when you don’t want to. Thank you for letting me see you, and love you. Thank you for holding my things. Thank you for kissing me on call. Thank you for making me laugh. Thank you for not hurting me. Thank you for getting me flowers. Thank you for knowing my favourite chocolates. Thank you for all that you do. Thank you for the best 6 months ever. I love you so much. You truly mean the world to me and I want to give you every bit of it. You are all that I have ever dreamed of having and every fiber of my being is so irrevacibly in love with you.</p>
         <p>Please, darling never think you aren’t cared for, or that I regret being with you. As long as I live, there will always be someone who cares about you and loves you, and will never regret doing so. I know sometimes you think if you don’t act a certain way, or do a certain thing, I will stop loving you. But the truth is, I can’t help but love you. My soul has woven with yours, my heart is in your hands, my cells are working to make a future home for our future babies. My skin longs for your touch. My lips crave yours. My brain only thinks about you. And I only need you. Every part of me needs you. Every moment we’ve had is engraved in my mind. You are everything to me my love. Everything and more. The world is a beautiful place because of you. Love will always be with you.</p>
         <p class="closing">Yours,<br>Aarsi</p>
       </div>
@@ -67,7 +67,7 @@
     <!-- CHESS SECTION -->
     <section id="chess" class="wrap section alt">
       <h3>Chess</h3>
-      <p>Play against a bot</p>
+      <p>Play against a simple bot</p>
       <div id="board" style="width: 320px; margin: 2rem auto;"></div>
     </section>
 
@@ -89,7 +89,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard.min.js"></script>
 
-  <!-- Lock screen + chess bot + year -->
   <script>
     // ===== ACCESS CODE LOCK =====
     const unlockBtn = document.getElementById('unlock-btn');
@@ -115,14 +114,13 @@
           var move = game.move({from: source, to: target, promotion: 'q'});
           if(move === null) return 'snapback';
 
-          // Simple bot: random legal move after 0.3s
-          window.setTimeout(function() {
-            var moves = game.moves();
-            if(moves.length === 0) return; // game over
+          // Bot move instantly
+          var moves = game.moves();
+          if(moves.length > 0){
             var botMove = moves[Math.floor(Math.random() * moves.length)];
             game.move(botMove);
             board.position(game.fen());
-          }, 300);
+          }
         }
       });
     });
